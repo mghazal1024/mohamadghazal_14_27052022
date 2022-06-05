@@ -1,0 +1,37 @@
+.employee {
+    &__section {
+        width: 100%;
+        border: 1px solid black;
+    }
+    &__row,
+    &__titles {
+        width: 100%;
+        display: flex;
+        list-style: none;
+        border-bottom: 1px solid black;
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+        flex-wrap: nowrap;
+        &:last-of-type {
+            border-bottom: 0;
+        }
+        &:hover {
+            background-color: rgba(0,0,0,0.1);
+        }
+    }
+    &__cell,
+    &__title {
+        padding: 10px;
+        border-left: 1px solid black;
+        width: 100%;
+        &:first-of-type {
+            border-left: 0;
+        }
+    }
+    &__title {
+        background-color: black;
+        color: white;
+        border-left: 1px solid white;
+    }
+}
