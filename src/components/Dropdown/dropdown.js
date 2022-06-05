@@ -4,7 +4,7 @@ import './dropdown.scss'
 const Dropdown = (props) => {
 
     const [dropdownActive, setDropdownActive] = useState(false)
-    const {list, title, handleResponse} = props
+    const {list, title} = props
 
     const handleDropdownActive = () => {
         setDropdownActive(!dropdownActive);
