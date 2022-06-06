@@ -11,16 +11,16 @@ const App = () => {
   const [data, setData] = useState([]);
 
   const fetchData = async () => {
-    let employeeArray = [];
+    let allEmployees = [];
     let error;
       try {
         const data = await db.collection('Employees').get();
         data.docs.map(el => {
           let employee = { ...el.data(), 'id' : el.id}
-          employeeArray.push(employee);
-          return employeeArray;
+          allEmployees.push(employee);
+          return allEmployees;
         });
-        setData(employeeArray)
+        setData(allEmployees)
       } catch(e) {
         error = 'error';
         return error
@@ -30,22 +30,6 @@ const App = () => {
   useEffect(() => {
     fetchData()
   }, [])
-
-  // const [employees, setEmployees] = useState([]);
-
-  // const fetchEmployees = async() => {
-  //   const response = db.collection('Employees');
-  //   const data = await response.get();
-  //   data.docs.map(item => {
-  //     setEmployees([...employees, item.data()])
-  //   })
-  // }
-
-
-  // useEffect(() => {
-  //   fetchEmployees();
-  //   console.log(employees)
-  // }, [])
 
   return (
     <Router>
