@@ -6,6 +6,7 @@ import Header from '../../components/Header/header'
 import Dropdown from '../../components/Dropdown/dropdown'
 import { states, departments } from '../../data/dropdownData'
 import db from '../../firebaseConfig'
+import DatePicker from '../../components/Datepicker/datepicker'
 
 const Homepage = () => {
 
@@ -69,7 +70,8 @@ const Homepage = () => {
 
                             <div className='create-employee__input'>
                                 <label htmlFor='date-of-first'>Date of Birth</label>
-                                <input id="date-of-birth" type="text" />
+                                {/* <input id="date-of-birth" type="text" /> */}
+                                <DatePicker></DatePicker>
                             </div>
 
                             <div className='create-employee__input'>
