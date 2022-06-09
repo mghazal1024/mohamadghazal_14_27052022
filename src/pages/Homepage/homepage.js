@@ -50,6 +50,14 @@ const Homepage = () => {
         setDepartment(data);
     }
 
+    const handleStartDateSelection = (data) => {
+        setStartDate(data);
+    } 
+
+    const handleBirthDateSelection = (data) => {
+        setBirthDate(data);
+    } 
+
     return (
         <>
             <Header></Header>
@@ -71,12 +79,17 @@ const Homepage = () => {
                             <div className='create-employee__input'>
                                 <label htmlFor='date-of-first'>Date of Birth</label>
                                 {/* <input id="date-of-birth" type="text" /> */}
-                                <DatePicker></DatePicker>
+                                <DatePicker
+                                    handleSelection = {handleBirthDateSelection}
+                                ></DatePicker>
                             </div>
 
                             <div className='create-employee__input'>
                                 <label htmlFor="start-date">Start Date</label>
-                                <input id="start-date" type="text" />
+                                {/* <input id="start-date" type="text" /> */}
+                                <DatePicker
+                                    handleSelection = {handleStartDateSelection}
+                                ></DatePicker>
                             </div>
                         </div>
                         <div className='create-employee__form-block create-employee__form-block--background'>
@@ -102,7 +115,7 @@ const Homepage = () => {
 
                             <div className='create-employee__input'>
                                 <label htmlFor="zip-code">Zip Code</label>
-                                <input id="zip-code" type="number" />
+                                <input id="zip-code" type="number" value={zip} onChange={(e) => setZip(e.target.value)} />
                             </div>
                         </div>
                         <div className='create-employee__form-block'>

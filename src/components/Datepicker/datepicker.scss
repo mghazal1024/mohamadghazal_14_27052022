@@ -1,6 +1,25 @@
 .datepicker {
-    border: 1px solid black;
     z-index: 10;
+
+    &__input {
+        input {
+            width: 100%;
+        }
+    }
+
+    &__calendar {
+        border: 1px solid black;
+        height: 0;
+        overflow: hidden;
+        opacity: 0;
+
+        &--show {
+            margin-bottom: 20px;
+            height: auto;
+            opacity: 1;
+        }
+
+    }
     &__header {
         display: flex;
         align-items: center;
@@ -18,7 +37,12 @@
     }
 
     &__arrow {
-        padding: 0 10px;
+        padding: 10px;
+        cursor: pointer;
+        color: rgba(0,0,0,0.3);
+        &:hover {
+            color: black;
+        }
     }
 
     &__body {
@@ -56,6 +80,7 @@
         padding: 5px 0;
         position: relative;
         color: black;
+        cursor: pointer;
         &::before {
             position: absolute;
             width: 20px;

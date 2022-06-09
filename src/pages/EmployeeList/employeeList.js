@@ -14,6 +14,7 @@ const EmployeeList = ( props ) => {
             <Link to="/">Homepage</Link>
             <section className='employee__section'>
                 <ul className='employee__titles'>
+                    <li className='employee__title'>StartDate</li>
                     <li className='employee__title'>First Name</li>
                     <li className='employee__title'>Last Name Name</li>
                     <li className='employee__title'>Department</li>
@@ -21,11 +22,12 @@ const EmployeeList = ( props ) => {
                     <li className='employee__title'>City</li>
                     <li className='employee__title'>State</li>
                     <li className='employee__title'>Zip Code</li>
+                    <li className='employee__title'>Birthdate</li>
                 </ul>
                 {employees.map((employee, i) => {
                     return (
                         <ul className='employee__row' key={i}>
-                            {/* <li className='employee__cell'>{employee.startDate}</li> */}
+                            <li className='employee__cell'>{new Date(employee.startDate.seconds*1000).toDateString()}</li>
                             <li className='employee__cell'>{employee.firstName}</li>
                             <li className='employee__cell'>{employee.lastName}</li>
                             <li className='employee__cell'>{employee.department}</li>
@@ -33,7 +35,7 @@ const EmployeeList = ( props ) => {
                             <li className='employee__cell'>{employee.city}</li>
                             <li className='employee__cell'>{employee.state}</li>
                             <li className='employee__cell'>{employee.zip}</li>
-                            {/* <li className='employee__cell'>{employee.birthDate}</li> */}
+                            <li className='employee__cell'>{new Date(employee.birthDate.seconds*1000).toDateString()}</li>
                         </ul>
                     )
                 })}
