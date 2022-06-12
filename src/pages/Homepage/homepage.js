@@ -1,4 +1,7 @@
 import React, { useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { addFirstName, addLastName, addStartDate, addBirthDate, addStreet, addCity, addState, addZip, addDepartment } from '../../slices/employeeSlice'
+
 import {Link} from 'react-router-dom'
 import './homepage.scss'
 
@@ -11,15 +14,27 @@ import DatePicker from '../../components/Datepicker/datepicker'
 
 const Homepage = () => {
 
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [street, setStreet] = useState('');
-    const [city, setCity] = useState('');
-    const [state, setState] = useState('');
-    const [zip, setZip] = useState('');
-    const [department, setDepartment] = useState('');
-    const [startDate, setStartDate] = useState(new Date());
-    const [birthDate, setBirthDate] = useState(new Date());
+
+    const firstName = useSelector((state) => state.firstName);
+    const lastName = useSelector((state) => state.lastName);
+    const street = useSelector((state) => state.state);
+    const city = useSelector((state) => state.city);
+    const state = useSelector((state) => state.state);
+    const zip = useSelector((state) => state.zip)
+    const department = useSelector((state) => state.department);
+    const startDate = useSelector((state) => state.startDate);
+    const birthDate = useSelector((state) => state.birthDate)
+    const dispatch = useDispatch();
+
+    // const [firstName, setFirstName] = useState('');
+    // const [lastName, setLastName] = useState('');
+    // const [street, setStreet] = useState('');
+    // const [city, setCity] = useState('');
+    // const [state, setState] = useState('');
+    // const [zip, setZip] = useState('');
+    // const [department, setDepartment] = useState('');
+    // const [startDate, setStartDate] = useState(new Date());
+    // const [birthDate, setBirthDate] = useState(new Date());
 
     const [error, setError] = useState(false);
     const [reset, setReset] = useState(false);
@@ -47,19 +62,23 @@ const Homepage = () => {
     }
 
     const handleStateSelection = (data) => {
-        setState(data);
+        // setState(data);
+        dispatch(addState(data));
     }
 
     const handleDepartmentSelection = (data) => {
-        setDepartment(data);
+        // setDepartment(data);
+        dispatch(addDepartment(data));
     }
 
     const handleStartDateSelection = (data) => {
-        setStartDate(data);
+        // setStartDate(data);
+        dispatch(addStartDate());        
     } 
 
     const handleBirthDateSelection = (data) => {
-        setBirthDate(data);
+        // setBirthDate(data);
+        dispatch(addBirthDate(data));
     } 
 
     const handleClose = () => {
@@ -76,21 +95,20 @@ const Homepage = () => {
                         <div className='create-employee__form-block'>
                             <div className='create-employee__input'>
                                 <label htmlFor='firstName'>First Name</label>
-                                <input id="firstName" type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)}/>
+                                <input id="firstName" type="text" value={firstName} onChange={(e) => {dispatch(addFirstName(e.target.value))}} />
                             </div>
 
                             <div className='create-employee__input'>
                                 <label htmlFor='lastName'>Last Name</label>
-                                <input id="lastName" type="text" value={lastName} onChange={(e) => setLastName(e.target.value)}/>
+                                <input id="lastName" type="text" value={lastName} onChange={(e) => {dispatch(addLastName(e.target.value))}}/>
                             </div>
 
-                            <div className='create-employee__input'>
+                            {/* <div className='create-employee__input'>
                                 <label htmlFor='date-of-first'>Date of Birth</label>
-                                {/* <input id="date-of-birth" type="text" /> */}
                                 <DatePicker
                                     handleSelection = {handleBirthDateSelection}
                                 ></DatePicker>
-                            </div>
+                            </div> */}
 
                             <div className='create-employee__input'>
                                 <label htmlFor="start-date">Start Date</label>
@@ -103,12 +121,12 @@ const Homepage = () => {
                         <div className='create-employee__form-block create-employee__form-block--background'>
                             <div className='create-employee__input'>
                                 <label htmlFor="street">Street</label>
-                                <input id="street" type="text"  value={street} onChange={(e) => setStreet(e.target.value)}/>
+                                <input id="street" type="text"  value={street} onChange={(e) => {dispatch(addStreet(e.target.value))}} />
                             </div>
 
                             <div className='create-employee__input'>
                                 <label htmlFor="city">City</label>
-                                <input id="city" type="text" value={city} onChange={(e) => setCity(e.target.value)} />
+                                <input id="city" type="text" value={city} onChange={(e) => {dispatch(addCity(e.target.value))}} />
                             </div>
 
                             <div className='create-employee__input'>
@@ -123,7 +141,7 @@ const Homepage = () => {
 
                             <div className='create-employee__input'>
                                 <label htmlFor="zip-code">Zip Code</label>
-                                <input id="zip-code" type="number" value={zip} onChange={(e) => setZip(e.target.value)} />
+                                <input id="zip-code" type="number" value={zip} onChange={(e) => {dispatch(addZip(e.target.value))}} />
                             </div>
                         </div>
                         <div className='create-employee__form-block'>

@@ -21,6 +21,7 @@ const App = () => {
           return allEmployees;
         });
         setData(allEmployees)
+        console.log(data)
       } catch(e) {
         error = 'error';
         return error
@@ -29,6 +30,7 @@ const App = () => {
 
   useEffect(() => {
     fetchData()
+    console.log(data)
   }, [])
 
   return (
