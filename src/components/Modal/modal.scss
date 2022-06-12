@@ -1,0 +1,24 @@
+.modal {
+    width: 40%;
+    padding: 50px;
+    background-color: white;
+    border: 1px solid black;
+    position: relative;
+    &__section {
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(255,255,255,0.5);
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 50;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    &__close {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+    }
+}

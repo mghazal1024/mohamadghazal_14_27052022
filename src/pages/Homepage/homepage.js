@@ -5,6 +5,7 @@ import './homepage.scss'
 import Header from '../../components/Header/header'
 import Dropdown from '../../components/Dropdown/dropdown'
 import { states, departments } from '../../data/dropdownData'
+import Modal from '../../components/Modal/modal'
 import db from '../../firebaseConfig'
 import DatePicker from '../../components/Datepicker/datepicker'
 
@@ -22,6 +23,8 @@ const Homepage = () => {
 
     const [error, setError] = useState(false);
     const [reset, setReset] = useState(false);
+    // const [employeeCreated, setEmployeeCreated] = useState(false);
+    const [modal, setModal] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -37,6 +40,7 @@ const Homepage = () => {
                 startDate: startDate,
                 department: department
             })
+            setModal(true);
         } catch (error) {
             setError(true);
         }
@@ -57,6 +61,10 @@ const Homepage = () => {
     const handleBirthDateSelection = (data) => {
         setBirthDate(data);
     } 
+
+    const handleClose = () => {
+        setModal(false);
+    }
 
     return (
         <>
@@ -133,7 +141,8 @@ const Homepage = () => {
                     </form>
                 </div>
             </section>
-            <div id="confirmation" className="modal">Employee Created!</div>
+            {/* <div id="confirmation" className="modal">Employee Created!</div> */}
+            { modal ? <Modal handleClose = {handleClose}></Modal> : ""}
         </>
     )
 }

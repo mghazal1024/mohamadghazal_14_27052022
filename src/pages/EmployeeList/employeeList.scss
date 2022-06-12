@@ -29,6 +29,20 @@
             border-left: 0;
         }
     }
+    &__cell--action {
+        display: flex;
+        width: 100%;
+        justify-content: space-around;
+    }
+
+    &__action {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        svg {
+            cursor: pointer;
+        }
+    }
     &__title {
         background-color: black;
         color: white;

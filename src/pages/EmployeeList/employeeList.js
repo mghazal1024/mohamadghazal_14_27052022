@@ -2,6 +2,11 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import './employeeList.scss';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons'
+// import EditEmployee from '../../components/EditEmployee/editEmployee';
+
+
 const EmployeeList = ( props ) => {
 
     const {employees} = props;
@@ -23,6 +28,7 @@ const EmployeeList = ( props ) => {
                     <li className='employee__title'>State</li>
                     <li className='employee__title'>Zip Code</li>
                     <li className='employee__title'>Birthdate</li>
+                    <li className='employee__title'>Actions</li>
                 </ul>
                 {employees.map((employee, i) => {
                     return (
@@ -36,10 +42,19 @@ const EmployeeList = ( props ) => {
                             <li className='employee__cell'>{employee.state}</li>
                             <li className='employee__cell'>{employee.zip}</li>
                             <li className='employee__cell'>{new Date(employee.birthDate.seconds*1000).toDateString()}</li>
+                            <li className='employee__cell employee__cell--action'>
+                                <div className='employee__action'>
+                                    <FontAwesomeIcon icon={faPencil}/>
+                                </div>
+                                <div className='employee__action'>
+                                    <FontAwesomeIcon icon={faTrash}/>
+                                </div>
+                            </li>
                         </ul>
                     )
                 })}
             </section>
+            {/* <EditEmployee></EditEmployee> */}
         </>
     )
 }
