@@ -25,11 +25,13 @@ const App = () => {
         error = 'error';
         return error
       }
+      console.log(data)
   }
-
-  useEffect(() => {
-    fetchData()
-  }, [])
+  fetchData()
+  // useEffect(() => {
+    
+  //   console.log(data);
+  // }, [])
 
   return (
     <Router>

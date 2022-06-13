@@ -9,9 +9,16 @@ import Modal from '../../components/Modal/modal'
 import db from '../../firebaseConfig'
 import DatePicker from '../../components/Datepicker/datepicker'
 
+import { useSelector, useDispatch } from 'react-redux'
+import { addFirstName } from '../../slices/employeeSlice'
+
 const Homepage = () => {
 
-    const [firstName, setFirstName] = useState('');
+    const firstName = useSelector((state) => state.firstName);
+
+    const dispatch = useDispatch();
+
+    // const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [street, setStreet] = useState('');
     const [city, setCity] = useState('');
@@ -76,7 +83,7 @@ const Homepage = () => {
                         <div className='create-employee__form-block'>
                             <div className='create-employee__input'>
                                 <label htmlFor='firstName'>First Name</label>
-                                <input id="firstName" type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)}/>
+                                <input id="firstName" type="text" value={firstName} onChange={(e) => { dispatch(addFirstName(e.target.value))}}/>
                             </div>
 
                             <div className='create-employee__input'>
