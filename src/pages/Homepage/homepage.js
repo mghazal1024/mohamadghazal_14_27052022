@@ -16,33 +16,120 @@ const Homepage = () => {
     const [street, setStreet] = useState('');
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
-    const [zip, setZip] = useState('');
+    const [zip, setZip] = useState(0);
     const [department, setDepartment] = useState('');
     const [startDate, setStartDate] = useState(new Date());
     const [birthDate, setBirthDate] = useState(new Date());
+
 
     const [error, setError] = useState(false);
     const [reset, setReset] = useState(false);
     // const [employeeCreated, setEmployeeCreated] = useState(false);
     const [modal, setModal] = useState(false);
 
+
+    // ERROR STATES
+    const [ firstNameError, setFirstNameError ] = useState('');
+    const [ lastNameError, setLastNameError ] = useState('');
+    const [ streetError, setStreetError ] = useState('');
+    const [ cityError, setCityError ] = useState('');
+    const [ stateError, setStateError ] = useState('');
+    const [ zipError, setZipError ] = useState('');
+    const [ departmentError, setDepartmentError ] = useState('');
+
+    const validateForm = () => {
+
+        let firstNameErrorMessage = '';
+        let lastNameErrorMessage = '';
+        let streetErrorMessage = '';
+        let cityErrorMessage = '';
+        let stateErrorMessage = '';
+        let zipErrorMessage = '';
+        let departmentErrorMessage = '';
+        let startDateErrorMessage = '';
+        let birthDateErrorMessage = '';
+
+
+        if (!firstName) {
+            firstNameErrorMessage = 'Please enter your first name';
+        }
+
+        if (!lastName) {
+            lastNameErrorMessage = 'Please enter your last name';
+        }
+
+        if (!street) {
+            streetErrorMessage = 'Please enter your street address';
+        }
+        
+        if (!city) {
+            cityErrorMessage = 'Please enter your city';
+        }
+
+        if (!state) {
+            stateErrorMessage = 'Please select an state';
+        }
+
+        if (!zip) {
+            zipErrorMessage = 'Please enter your zip code';
+        }
+
+        if (!department) {
+            departmentErrorMessage = 'Please select a department';
+        }
+
+        if (firstNameErrorMessage || lastNameErrorMessage || streetErrorMessage || cityErrorMessage || stateErrorMessage || zipErrorMessage || departmentErrorMessage || startDateErrorMessage || birthDateErrorMessage) {
+            setFirstNameError(firstNameErrorMessage);
+            setLastNameError(lastNameErrorMessage);
+            setStreetError(streetErrorMessage);
+            setCityError(cityErrorMessage);
+            setStateError(stateErrorMessage);
+            setZipError(zipErrorMessage);
+            setDepartmentError(departmentErrorMessage);
+
+            return false
+        }
+
+
+        return true;
+        
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        try {
-            db.collection('Employees').add({
-                firstName: firstName,
-                lastName: lastName,
-                street: street,
-                city: city,
-                state: state,
-                zip: zip,
-                birthDate: birthDate,
-                startDate: startDate,
-                department: department
-            })
-            setModal(true);
-        } catch (error) {
-            setError(true);
+        if(validateForm()) {
+            try {
+                db.collection('Employees').add({
+                    firstName: firstName,
+                    lastName: lastName,
+                    street: street,
+                    city: city,
+                    state: state,
+                    zip: zip,
+                    birthDate: birthDate,
+                    startDate: startDate,
+                    department: department
+                })
+                setModal(true);
+            } catch (error) {
+                setError(true);
+            }
+
+            setFirstNameError('');
+            setLastNameError('');
+            setStreetError('');
+            setCityError('');
+            setStateError('');
+            setZipError('');
+            setDepartmentError('');
+        
+            setReset(!reset);
+            setFirstName('');
+            setLastName('');
+            setStreet('');
+            setCity('');
+            setZip(0);
+            
         }
     }
 
@@ -77,16 +164,17 @@ const Homepage = () => {
                             <div className='create-employee__input'>
                                 <label htmlFor='firstName'>First Name</label>
                                 <input id="firstName" type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)}/>
+                                {firstNameError ? <p className='create-employee__error'>{firstNameError}</p> : null}
                             </div>
 
                             <div className='create-employee__input'>
                                 <label htmlFor='lastName'>Last Name</label>
                                 <input id="lastName" type="text" value={lastName} onChange={(e) => setLastName(e.target.value)}/>
+                                {lastNameError ? <p className='create-employee__error'>{lastNameError}</p> : null}
                             </div>
 
                             <div className='create-employee__input'>
                                 <label htmlFor='date-of-first'>Date of Birth</label>
-                                {/* <input id="date-of-birth" type="text" /> */}
                                 <DatePicker
                                     handleSelection = {handleBirthDateSelection}
                                 ></DatePicker>
@@ -94,7 +182,6 @@ const Homepage = () => {
 
                             <div className='create-employee__input'>
                                 <label htmlFor="start-date">Start Date</label>
-                                {/* <input id="start-date" type="text" /> */}
                                 <DatePicker
                                     handleSelection = {handleStartDateSelection}
                                 ></DatePicker>
@@ -104,11 +191,13 @@ const Homepage = () => {
                             <div className='create-employee__input'>
                                 <label htmlFor="street">Street</label>
                                 <input id="street" type="text"  value={street} onChange={(e) => setStreet(e.target.value)}/>
+                                {streetError ? <p className='create-employee__error'>{streetError}</p> : null}
                             </div>
 
                             <div className='create-employee__input'>
                                 <label htmlFor="city">City</label>
                                 <input id="city" type="text" value={city} onChange={(e) => setCity(e.target.value)} />
+                                {cityError ? <p className='create-employee__error'>{cityError}</p> : null}
                             </div>
 
                             <div className='create-employee__input'>
@@ -119,11 +208,13 @@ const Homepage = () => {
                                     handleSelection = {handleStateSelection}
                                     reset = {reset}
                                 ></Dropdown>
+                                {stateError ? <p className='create-employee__error'>{stateError}</p> : null}
                             </div>
 
                             <div className='create-employee__input'>
                                 <label htmlFor="zip-code">Zip Code</label>
                                 <input id="zip-code" type="number" value={zip} onChange={(e) => setZip(e.target.value)} />
+                                {zipError ? <p className='create-employee__error'>{zipError}</p> : null}
                             </div>
                         </div>
                         <div className='create-employee__form-block'>
@@ -135,8 +226,9 @@ const Homepage = () => {
                                     handleSelection = {handleDepartmentSelection}
                                     reset = {reset}
                                 ></Dropdown>
+                                {departmentError ? <p className='create-employee__error'>{departmentError}</p> : null}
                             </div>
-                            <button onClick={handleSubmit}>Save</button>
+                            <button onClick={handleSubmit}>Create</button>
                         </div>
                     </form>
                 </div>
