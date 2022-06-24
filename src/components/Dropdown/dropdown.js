@@ -30,7 +30,7 @@ const Dropdown = (props) => {
         dropdownRef.current.addEventListener('focusout', () => {
             setDropdownActive(false);
         })
-    });
+    },[]);
 
     useEffect(() => {
         setSelection('')
