@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {Link} from 'react-router-dom'
 import './employeeList.scss';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons'
+import db from '../../firebaseConfig';
 // import EditEmployee from '../../components/EditEmployee/editEmployee';
 
 
@@ -12,6 +13,21 @@ const EmployeeList = ( props ) => {
     const {employees} = props;
 
     console.log(employees)
+
+    const [ isLoading, setIsLoading] = useState();
+
+
+    const handleDelete = (id) => {
+        console.log(id)
+        if(isLoading) {
+            db.collection('Employees').doc(id).delete();
+        }
+        
+    }
+
+    useEffect(() => {
+        setIsLoading(true);
+    }, [employees])
     
     return (
         <>
@@ -49,7 +65,7 @@ const EmployeeList = ( props ) => {
                                 <div className='employee__action'>
                                     <FontAwesomeIcon icon={faPencil}/>
                                 </div>
-                                <div className='employee__action'>
+                                <div className='employee__action' onClick={() => {handleDelete(employee.id)}}>
                                     <FontAwesomeIcon icon={faTrash}/>
                                 </div>
                             </li>
