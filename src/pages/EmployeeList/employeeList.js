@@ -15,6 +15,9 @@ const EmployeeList = ( props ) => {
     
     return (
         <>
+            {employees.map(( employee, id) => {
+                console.log(employee)
+            })}
             <h1>Table of employees</h1>
             <Link to="/">Homepage</Link>
             <section className='employee__section'>
@@ -33,15 +36,15 @@ const EmployeeList = ( props ) => {
                 {employees.map((employee, i) => {
                     return (
                         <ul className='employee__row' key={i}>
-                            <li className='employee__cell'>{new Date(employee.startDate.seconds*1000).toDateString()}</li>
-                            <li className='employee__cell'>{employee.firstName}</li>
-                            <li className='employee__cell'>{employee.lastName}</li>
-                            <li className='employee__cell'>{employee.department}</li>
-                            <li className='employee__cell'>{employee.street}</li>
-                            <li className='employee__cell'>{employee.city}</li>
-                            <li className='employee__cell'>{employee.state}</li>
-                            <li className='employee__cell'>{employee.zip}</li>
-                            <li className='employee__cell'>{new Date(employee.birthDate.seconds*1000).toDateString()}</li>
+                            <li className='employee__cell'>{new Date(employee.employee.startDate.seconds*1000).toDateString()}</li>
+                            <li className='employee__cell'>{employee.employee.firstName}</li>
+                            <li className='employee__cell'>{employee.employee.lastName}</li>
+                            <li className='employee__cell'>{employee.employee.department}</li>
+                            <li className='employee__cell'>{employee.employee.street}</li>
+                            <li className='employee__cell'>{employee.employee.city}</li>
+                            <li className='employee__cell'>{employee.employee.state}</li>
+                            <li className='employee__cell'>{employee.employee.zip}</li>
+                            <li className='employee__cell'>{new Date(employee.employee.birthDate.seconds*1000).toDateString()}</li>
                             <li className='employee__cell employee__cell--action'>
                                 <div className='employee__action'>
                                     <FontAwesomeIcon icon={faPencil}/>
