@@ -38,9 +38,9 @@ const App = () => {
     if(isMounted.current) {
       db.collection('Employees').onSnapshot(snapshot => {
         setData(snapshot.docs.map(doc => ({id: doc.id, employee: doc.data()})))
-        snapshot.docs.map( doc => {
-          console.log(doc.id)
-        })
+        // snapshot.docs.map( doc => {
+        //   console.log(doc.id)
+        // })
       })
     } else {
       isMounted.current = true

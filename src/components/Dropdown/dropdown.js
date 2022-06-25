@@ -3,15 +3,17 @@ import './dropdown.scss'
 
 const Dropdown = (props) => {
 
+    const {list, name, handleSelection, reset, initialValue} = props
+
+
     const [dropdownActive, setDropdownActive] = useState(false);
-    const [selection, setSelection] = useState('');
+    const [selection, setSelection] = useState();
 
     const ref = useRef(null);
     const dropdownRef = useRef(null);
     
     const title = useRef(null);
 
-    const {list, name, handleSelection, reset} = props
 
     const handleDropdownActive = (e) => {
         if(ref.current && !ref.current.contains(e.target)) {
@@ -33,7 +35,7 @@ const Dropdown = (props) => {
     },[]);
 
     useEffect(() => {
-        setSelection('')
+        setSelection(initialValue ? initialValue : '')
     }, [reset])
 
     const handleChange = (data) => {

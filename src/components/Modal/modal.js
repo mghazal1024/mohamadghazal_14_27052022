@@ -7,6 +7,7 @@ import './modal.scss';
 const Modal = (props) => {
 
     const { handleClose } = props;
+    
     return (
         <section className='modal__section'>
 
