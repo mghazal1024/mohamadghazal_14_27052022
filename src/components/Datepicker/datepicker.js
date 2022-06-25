@@ -9,7 +9,7 @@ let todayTimestamp = Date.now() - (Date.now() % oneDay) + (new Date().getTimezon
 
 const DatePicker = ( props ) => {
 
-    const { handleSelection } = props;
+    const { handleSelection, initialValue } = props;
 
 
     const daysArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -80,7 +80,7 @@ const DatePicker = ( props ) => {
 
     // STATE
 
-    const [date, setDate] = useState(new Date());
+    const [date, setDate] = useState(new Date(initialValue ? initialValue : null));
     const [year, setYear] = useState(date.getFullYear());
     const [month, setMonth] = useState(date.getMonth());
     const [selectedDay, setSelectedDay] = useState(todayTimestamp)

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import {Link} from 'react-router-dom'
 import './employeeList.scss';
 
+import EditEmployee from '../../components/EditEmployee/edit-employee';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons'
 import db from '../../firebaseConfig';
@@ -12,17 +14,28 @@ const EmployeeList = ( props ) => {
 
     const {employees} = props;
 
-    console.log(employees)
+    // console.log(employees)
 
     const [ isLoading, setIsLoading] = useState();
-
+    const [ isEditEmployee, setIsEditEmployee ] = useState(false);
+    const [ employeeId, setEmployeeId ] = useState('')
 
     const handleDelete = (id) => {
-        console.log(id)
+        // console.log(id)
         if(isLoading) {
             db.collection('Employees').doc(id).delete();
         }
         
+    }
+
+    const handleEditClick = (id) => {
+        setIsEditEmployee(true);
+        setEmployeeId(id);
+        // console.log(employeeId)
+    }
+
+    const handleEditClose = () => {
+        setIsEditEmployee(false)
     }
 
     useEffect(() => {
@@ -32,7 +45,7 @@ const EmployeeList = ( props ) => {
     return (
         <>
             {employees.map(( employee, id) => {
-                console.log(employee)
+                {/* console.log(employee) */}
             })}
             <h1>Table of employees</h1>
             <Link to="/">Homepage</Link>
@@ -63,7 +76,7 @@ const EmployeeList = ( props ) => {
                             <li className='employee__cell'>{new Date(employee.employee.birthDate.seconds*1000).toDateString()}</li>
                             <li className='employee__cell employee__cell--action'>
                                 <div className='employee__action'>
-                                    <FontAwesomeIcon icon={faPencil}/>
+                                    <FontAwesomeIcon icon={faPencil} onClick={() => {handleEditClick(employee.id)}}/>
                                 </div>
                                 <div className='employee__action' onClick={() => {handleDelete(employee.id)}}>
                                     <FontAwesomeIcon icon={faTrash}/>
@@ -73,7 +86,7 @@ const EmployeeList = ( props ) => {
                     )
                 })}
             </section>
-            {/* <EditEmployee></EditEmployee> */}
+            {isEditEmployee ? <EditEmployee handleClose = {handleEditClose} employees={employees} employeeId = {employeeId}></EditEmployee> : null}
         </>
     )
 }
