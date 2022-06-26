@@ -91,6 +91,14 @@ const EmployeeList = ( props ) => {
         }
     }
 
+    const handleSearch = (e) => {
+        const searched = employees.filter( el => {
+            return el.employee.firstName.toLowerCase().includes(e.target.value.toLowerCase());
+        })
+
+        console.log(searched)
+    }
+
     useEffect(() => {
         setIsLoading(true);
     }, [employees, sorted])
@@ -102,7 +110,10 @@ const EmployeeList = ( props ) => {
             })}
             <div className='employee__header'>
                 <h1>Table of employees</h1>
-                <Link className='button' to="/">Homepage</Link>
+                <div>
+                    <Link className='button' to="/">Homepage</Link>
+                    <input type="text" placeholder='Search' onChange={(e) => handleSearch(e)}></input>
+                </div>
             </div>
             <section className='employee__section'>
                 <ul className='employee__titles'>
