@@ -18,7 +18,9 @@ const EmployeeList = ( props ) => {
 
     const [ isLoading, setIsLoading] = useState();
     const [ isEditEmployee, setIsEditEmployee ] = useState(false);
-    const [ employeeId, setEmployeeId ] = useState('')
+    const [ employeeId, setEmployeeId ] = useState('');
+
+    const [ sorted , setSorted ] = useState(false)
 
     const handleDelete = (id) => {
         // console.log(id)
@@ -38,9 +40,60 @@ const EmployeeList = ( props ) => {
         setIsEditEmployee(false)
     }
 
+    const normalizeText = (text) => {
+
+        if(typeof text === 'string')  {
+            console.log(typeof text);
+            console.log(text);
+            return text
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .trim();
+        } else {
+            console.log(typeof text)
+            console.log(text)
+            console.log(new Date(text.seconds * 1000).getTime());
+            return new Date(text.seconds * 1000).getTime();
+        }
+      };
+
+    const handleSorting = ( label ) => {
+        console.log(employees)
+        if(sorted) {
+            employees.sort((a,b) => {
+                const aElement = normalizeText(a.employee[label]);
+                const bElement = normalizeText(b.employee[label]);
+    
+                if (aElement < bElement) {
+                    return -1
+                }
+                if (aElement > bElement) {
+                    return 1;
+                }
+                return 0;
+            })
+            setSorted(!sorted)
+        } else {
+            employees.sort((a,b) => {
+                const aElement = normalizeText(a.employee[label]);
+                const bElement = normalizeText(b.employee[label]);
+    
+                if (aElement > bElement) {
+                    return -1
+                }
+                if (aElement < bElement) {
+                    return 1;
+                }
+                return 0;
+            })
+            setSorted(!sorted)
+        }
+    }
+
     useEffect(() => {
         setIsLoading(true);
-    }, [employees])
+    }, [employees, sorted])
     
     return (
         <>
@@ -51,15 +104,15 @@ const EmployeeList = ( props ) => {
             <Link to="/">Homepage</Link>
             <section className='employee__section'>
                 <ul className='employee__titles'>
-                    <li className='employee__title'>StartDate</li>
-                    <li className='employee__title'>First Name</li>
-                    <li className='employee__title'>Last Name Name</li>
-                    <li className='employee__title'>Department</li>
-                    <li className='employee__title'>Street</li>
-                    <li className='employee__title'>City</li>
-                    <li className='employee__title'>State</li>
-                    <li className='employee__title'>Zip Code</li>
-                    <li className='employee__title'>Birthdate</li>
+                    <li className='employee__title' onClick={() => {handleSorting('startDate')}}>StartDate</li>
+                    <li className='employee__title' onClick={() => {handleSorting('firstName')}}>First Name</li>
+                    <li className='employee__title' onClick={() => {handleSorting('lastName')}}>Last Name</li>
+                    <li className='employee__title' onClick={() => {handleSorting('department')}}>Department</li>
+                    <li className='employee__title' onClick={() => {handleSorting('street')}}>Street</li>
+                    <li className='employee__title' onClick={() => {handleSorting('city')}}>City</li>
+                    <li className='employee__title' onClick={() => {handleSorting('state')}}>State</li>
+                    <li className='employee__title' onClick={() => {handleSorting('zip')}}>Zip Code</li>
+                    <li className='employee__title' onClick={() => {handleSorting('birthDate')}}>Birthdate</li>
                     <li className='employee__title'>Actions</li>
                 </ul>
                 {employees.map((employee, i) => {
