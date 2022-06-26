@@ -47,8 +47,10 @@ const EmployeeList = ( props ) => {
             {employees.map(( employee, id) => {
                 {/* console.log(employee) */}
             })}
-            <h1>Table of employees</h1>
-            <Link to="/">Homepage</Link>
+            <div className='employee__header'>
+                <h1>Table of employees</h1>
+                <Link className='button' to="/">Homepage</Link>
+            </div>
             <section className='employee__section'>
                 <ul className='employee__titles'>
                     <li className='employee__title'>StartDate</li>
