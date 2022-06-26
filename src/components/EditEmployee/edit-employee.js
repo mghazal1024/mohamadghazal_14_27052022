@@ -28,6 +28,8 @@ const EditEmployee = ( props ) => {
     const [ birthDate, setBirthDate ] = useState(new Date(selectedEmployee.employee.birthDate.seconds * 1000));
     const [ startDate, setStartDate ] = useState(new Date(selectedEmployee.employee.startDate.seconds * 1000));
 
+    const [ successMessage, setSuccessMessage ] = useState(false)
+
     const [ reset, setReset ] = useState(false)
 
     console.log(`The date is ${birthDate}`)
@@ -62,8 +64,10 @@ const EditEmployee = ( props ) => {
                 birthDate: birthDate,
                 startDate: startDate
             })
+            setSuccessMessage(true)
         } catch {
             console.error("error updating the employee's information")
+            setSuccessMessage(false)
         }
     }
 
@@ -154,6 +158,7 @@ const EditEmployee = ( props ) => {
                                 {/* {departmentError ? <p className='create-employee__error'>{departmentError}</p> : null} */}
                             </div>
                             <button onClick={handleUpdateSubmit}>Update</button>
+                            {successMessage ? <p className='successful_p'>Employee updated successfully</p> : ''}
                         </div>
                     </form>
             </div>
