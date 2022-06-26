@@ -80,7 +80,7 @@ const DatePicker = ( props ) => {
 
     // STATE
 
-    const [date, setDate] = useState(new Date(initialValue ? initialValue : null));
+    const [date, setDate] = useState(initialValue ? new Date(initialValue) : new Date());
     const [year, setYear] = useState(date.getFullYear());
     const [month, setMonth] = useState(date.getMonth());
     const [selectedDay, setSelectedDay] = useState(todayTimestamp)
