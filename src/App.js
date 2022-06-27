@@ -9,22 +9,25 @@ import db from './firebaseConfig';
 
 const App = () => {
 
+  // STATES
   const [data, setData] = useState([]);
   const [ isLoading, setIsLoading ] = useState();
   const [ isEditEmployee, setIsEditEmployee ] = useState(false);
   const [ employeeId, setEmployeeId ] = useState('');
   const [searchedEmployees, setSearchEmployees ] = useState([])
-
   const [ sorted , setSorted ] = useState(false);
-
   const isMounted = useRef(false)
 
+  // ACTIONS
+
+  // deletes employees
   const handleDelete = (id) => {
     if(isLoading) {
       db.collection('Employees').doc(id).delete();
     }
   }
 
+  // Sorts the list of employees when title header is clicked
   const handleSorting = ( label ) => {
     if(sorted) {
         searchedEmployees.sort((a,b) => {
@@ -57,6 +60,7 @@ const App = () => {
     }
   }
 
+  // handles the search as search input changes
   const handleSearch = (e) => {
 
     setSearchEmployees(data.filter ( el => {
@@ -73,15 +77,18 @@ const App = () => {
 
   }
 
+  // display a modal to edit the employee
   const handleEditClick = (id) => {
     setIsEditEmployee(true);
     setEmployeeId(id);
   }
 
+  // closes the employee edit
   const handleEditClose = () => {
     setIsEditEmployee(false);
   }
 
+  // LYFECYCLE OF COMPONENT
   useEffect(() => {
     if(isMounted.current) {
       db.collection('Employees').onSnapshot(snapshot => {
@@ -99,6 +106,7 @@ const App = () => {
   useEffect(() => {
     setIsLoading(true);
   }, [data, sorted, setSearchEmployees])
+  
 
   return (
     <Router>
