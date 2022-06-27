@@ -69,6 +69,8 @@ const App = () => {
       || el.employee.zip.toString().includes(e.target.value.toLowerCase())
     }))
 
+    console.log(searchedEmployees)
+
   }
 
   const handleEditClick = (id) => {
@@ -82,6 +84,9 @@ const App = () => {
 
   useEffect(() => {
     if(isMounted.current) {
+      db.collection('Employees').onSnapshot(snapshot => {
+        setData(snapshot.docs.map(doc => ({id: doc.id, employee: doc.data()})))
+      })
       db.collection('Employees').onSnapshot(snapshot => {
         setSearchEmployees(snapshot.docs.map(doc => ({id: doc.id, employee: doc.data()})))
       })
