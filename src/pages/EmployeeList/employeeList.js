@@ -7,7 +7,6 @@ import EditEmployee from '../../components/EditEmployee/edit-employee';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons'
 import db from '../../firebaseConfig';
-// import EditEmployee from '../../components/EditEmployee/editEmployee';
 
 
 const EmployeeList = ( props ) => {
@@ -91,18 +90,22 @@ const EmployeeList = ( props ) => {
         }
     }
 
+    const handleChange = (e) => {
+        console.log(e.target.value)
+    }
+
     useEffect(() => {
         setIsLoading(true);
     }, [employees, sorted])
     
     return (
         <>
-            {employees.map(( employee, id) => {
-                {/* console.log(employee) */}
-            })}
             <div className='employee__header'>
                 <h1>Table of employees</h1>
-                <Link className='button' to="/">Homepage</Link>
+                <div className='employee__search'>
+                    <Link className='button' to="/">Homepage</Link>
+                    <input type="text" onChange={(e) => {handleChange(e)}}/>
+                </div>
             </div>
             <section className='employee__section'>
                 <ul className='employee__titles'>
