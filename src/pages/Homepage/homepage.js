@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import {Link} from 'react-router-dom'
 import './homepage.scss'
 
 import Header from '../../components/Header/header'
@@ -11,6 +10,7 @@ import DatePicker from '../../components/Datepicker/datepicker'
 
 const Homepage = () => {
 
+    // STATES
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [street, setStreet] = useState('');
@@ -21,10 +21,8 @@ const Homepage = () => {
     const [startDate, setStartDate] = useState(new Date());
     const [birthDate, setBirthDate] = useState(new Date());
 
-
     const [error, setError] = useState(false);
     const [reset, setReset] = useState(false);
-    // const [employeeCreated, setEmployeeCreated] = useState(false);
     const [modal, setModal] = useState(false);
 
 
@@ -37,6 +35,7 @@ const Homepage = () => {
     const [ zipError, setZipError ] = useState('');
     const [ departmentError, setDepartmentError ] = useState('');
 
+    // Validates if all form inputs are filled
     const validateForm = () => {
 
         let firstNameErrorMessage = '';
@@ -95,6 +94,7 @@ const Homepage = () => {
         
     }
 
+    // Handle the form submit and add the new employee
     const handleSubmit = (e) => {
         e.preventDefault();
         if(validateForm()) {
@@ -133,22 +133,21 @@ const Homepage = () => {
         }
     }
 
+    // Functions to handle selections
     const handleStateSelection = (data) => {
         setState(data);
     }
-
     const handleDepartmentSelection = (data) => {
         setDepartment(data);
     }
-
     const handleStartDateSelection = (data) => {
         setStartDate(data);
     } 
-
     const handleBirthDateSelection = (data) => {
         setBirthDate(data);
     } 
 
+    // Handles Modal Close
     const handleClose = () => {
         setModal(false);
     }

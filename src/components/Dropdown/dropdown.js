@@ -5,16 +5,16 @@ const Dropdown = (props) => {
 
     const {list, name, handleSelection, reset, initialValue} = props
 
-
+    // STATES
     const [dropdownActive, setDropdownActive] = useState(false);
     const [selection, setSelection] = useState();
-
+    
+    // REFS
     const ref = useRef(null);
     const dropdownRef = useRef(null);
-    
     const title = useRef(null);
 
-
+    // Handles dropdown
     const handleDropdownActive = (e) => {
         if(ref.current && !ref.current.contains(e.target)) {
             setDropdownActive(false);
@@ -24,6 +24,13 @@ const Dropdown = (props) => {
         }
     };
 
+    // Handles data change
+    const handleChange = (data) => {
+        handleSelection(data)
+    }
+
+
+    // LIFECYCLE of the Component
     useEffect(() => {
         document.addEventListener('click', handleDropdownActive, true);
         dropdownRef.current.addEventListener('focusin', () => {
@@ -38,9 +45,6 @@ const Dropdown = (props) => {
         setSelection(initialValue ? initialValue : '')
     }, [reset])
 
-    const handleChange = (data) => {
-        handleSelection(data)
-    }
     return (
         <div className='dropdown' tabIndex={0} ref={dropdownRef}>
             <div ref={title} className='dropdown__block dropdown__block--title' onClick={() => handleDropdownActive}>
