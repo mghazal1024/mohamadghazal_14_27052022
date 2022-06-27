@@ -7,102 +7,21 @@ import EditEmployee from '../../components/EditEmployee/edit-employee';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons'
 import db from '../../firebaseConfig';
-// import EditEmployee from '../../components/EditEmployee/editEmployee';
 
 
 const EmployeeList = ( props ) => {
 
-    const {employees} = props;
+    const {employees, handleDelete, handleSorting, handleEditClick, handleEditClose, handleSearch, employeeId, isEditEmployee} = props;
 
-    // console.log(employees)
-
-    const [ isLoading, setIsLoading] = useState();
-    const [ isEditEmployee, setIsEditEmployee ] = useState(false);
-    const [ employeeId, setEmployeeId ] = useState('');
-
-    const [ sorted , setSorted ] = useState(false)
-
-    const handleDelete = (id) => {
-        // console.log(id)
-        if(isLoading) {
-            db.collection('Employees').doc(id).delete();
-        }
-        
-    }
-
-    const handleEditClick = (id) => {
-        setIsEditEmployee(true);
-        setEmployeeId(id);
-        // console.log(employeeId)
-    }
-
-    const handleEditClose = () => {
-        setIsEditEmployee(false)
-    }
-
-    const normalizeText = (text) => {
-
-        if(typeof text === 'string')  {
-            console.log(typeof text);
-            console.log(text);
-            return text
-          .toLowerCase()
-          .normalize("NFD")
-          .replace(/[\u0300-\u036f]/g, "")
-          .trim();
-        } else {
-            console.log(typeof text)
-            console.log(text)
-            console.log(new Date(text.seconds * 1000).getTime());
-            return new Date(text.seconds * 1000).getTime();
-        }
-      };
-
-    const handleSorting = ( label ) => {
-        console.log(employees)
-        if(sorted) {
-            employees.sort((a,b) => {
-                const aElement = normalizeText(a.employee[label]);
-                const bElement = normalizeText(b.employee[label]);
-    
-                if (aElement < bElement) {
-                    return -1
-                }
-                if (aElement > bElement) {
-                    return 1;
-                }
-                return 0;
-            })
-            setSorted(!sorted)
-        } else {
-            employees.sort((a,b) => {
-                const aElement = normalizeText(a.employee[label]);
-                const bElement = normalizeText(b.employee[label]);
-    
-                if (aElement > bElement) {
-                    return -1
-                }
-                if (aElement < bElement) {
-                    return 1;
-                }
-                return 0;
-            })
-            setSorted(!sorted)
-        }
-    }
-
-    useEffect(() => {
-        setIsLoading(true);
-    }, [employees, sorted])
     
     return (
         <>
-            {employees.map(( employee, id) => {
-                {/* console.log(employee) */}
-            })}
             <div className='employee__header'>
                 <h1>Table of employees</h1>
-                <Link className='button' to="/">Homepage</Link>
+                <div className='employee__search'>
+                    <Link className='button' to="/">Homepage</Link>
+                    <input type="text" onChange={(e) => {handleSearch(e)}}/>
+                </div>
             </div>
             <section className='employee__section'>
                 <ul className='employee__titles'>

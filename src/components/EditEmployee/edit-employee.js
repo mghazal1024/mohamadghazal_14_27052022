@@ -12,11 +12,7 @@ const EditEmployee = ( props ) => {
 
     const {handleClose, employees, employeeId} = props 
 
-
-
     const selectedEmployee = employees.find( e => e.id === employeeId);
-
-    console.log(selectedEmployee)
 
     const [ firstName, setFirstName ] = useState(selectedEmployee.employee.firstName)
     const [ lastName, setLastName ] = useState(selectedEmployee.employee.lastName)
@@ -31,8 +27,6 @@ const EditEmployee = ( props ) => {
     const [ successMessage, setSuccessMessage ] = useState(false)
 
     const [ reset, setReset ] = useState(false)
-
-    console.log(`The date is ${birthDate}`)
 
     const handleStateSelection = (data) => {
         setState(data);
