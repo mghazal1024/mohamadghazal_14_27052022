@@ -16,7 +16,10 @@ const App = () => {
   const [ employeeId, setEmployeeId ] = useState('');
   const [searchedEmployees, setSearchEmployees ] = useState([])
   const [ sorted , setSorted ] = useState(false);
-  const isMounted = useRef(false)
+  const isMounted = useRef(false);
+
+  const [ currentPage, setCurrentPage ] = useState(1);
+  const [ perPage, setPerPage ] = useState(5);
 
   // ACTIONS
 
@@ -88,6 +91,13 @@ const App = () => {
     setIsEditEmployee(false);
   }
 
+  // Change page on pagination
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber)
+  }
+
+
+
   // LYFECYCLE OF COMPONENT
   useEffect(() => {
     if(isMounted.current) {
@@ -108,13 +118,18 @@ const App = () => {
   }, [data, sorted, setSearchEmployees])
   
 
+  const indexOfLast = currentPage * perPage;
+  const indexOfFirst = indexOfLast - perPage;
+  const currentDisplayed = searchedEmployees.slice(indexOfFirst, indexOfLast); 
+
+
   return (
     <Router>
       <Routes>
         <Route exact path="/" element={<Homepage/>} />
         <Route path="/employee-list" element={
           <EmployeeList
-            employees = {searchedEmployees} 
+            employees = {currentDisplayed} 
             employeeId = {employeeId}
             handleDelete = {handleDelete}
             handleSorting = {handleSorting}
@@ -122,6 +137,9 @@ const App = () => {
             handleEditClose = {handleEditClose}
             handleSearch = {handleSearch}
             isEditEmployee = {isEditEmployee}
+            perPage = {perPage}
+            totalEmployees = {searchedEmployees.length}
+            paginate = {paginate}
           />
         } />
       </Routes>
