@@ -5,12 +5,17 @@ import EditEmployee from '../../components/EditEmployee/edit-employee';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { columns  } from '../../data/dropdownData';
+import Pagination from '../../components/Pagination/pagination';
 
 
 // RENDERS the list of employees
-const EmployeeList = ( props ) => {
+const EmployeeList = ({ employees, handleDelete, handleSorting, handleEditClick, handleEditClose, handleSearch, employeeId, isEditEmployee, totalEmployees, perPage, paginate }) => {
 
-    const {employees, handleDelete, handleSorting, handleEditClick, handleEditClose, handleSearch, employeeId, isEditEmployee} = props;
+    const pageNumbers = [];
+
+    for(let i = 1; i <= Math.ceil(totalEmployees / perPage); i++) {
+      pageNumbers.push(i);
+    }
 
     
     return (
@@ -53,6 +58,10 @@ const EmployeeList = ( props ) => {
                     )
                 })}
             </section>
+            <Pagination
+                pageNumbers = {pageNumbers}
+                paginate = {paginate}
+            ></Pagination>
             {isEditEmployee ? <EditEmployee handleClose = {handleEditClose} employees={employees} employeeId = {employeeId}></EditEmployee> : null}
         </>
     )

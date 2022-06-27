@@ -75,4 +75,25 @@
         border-left: 1px solid white;
         cursor: pointer;
     }
+    &__pagination {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        list-style: none;
+        li {
+            border: 1px solid black;
+            height: 30px;
+            width: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            &:hover {
+                background-color: black;
+                color: white;
+            }
+        }
+    }
 }
