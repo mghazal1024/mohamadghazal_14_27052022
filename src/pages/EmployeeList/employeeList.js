@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import './employeeList.scss';
 import EditEmployee from '../../components/EditEmployee/edit-employee';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faPencil, faTrash, faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { columns  } from '../../data/dropdownData';
 
 
@@ -52,6 +52,11 @@ const EmployeeList = ( props ) => {
                         </ul>
                     )
                 })}
+            </section>
+            <section className='employee__pagination'>
+                <FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon>
+                <p>1 / 3</p>
+                <FontAwesomeIcon icon={faArrowRight}></FontAwesomeIcon>
             </section>
             {isEditEmployee ? <EditEmployee handleClose = {handleEditClose} employees={employees} employeeId = {employeeId}></EditEmployee> : null}
         </>
