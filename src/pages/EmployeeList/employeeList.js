@@ -11,92 +11,14 @@ import db from '../../firebaseConfig';
 
 const EmployeeList = ( props ) => {
 
-    const {employees} = props;
+    const {employees, handleDelete, handleSorting, handleEditClick, handleEditClose, handleSearch, employeeId, isEditEmployee} = props;
 
-    // console.log(employees)
-
-    const [ isLoading, setIsLoading] = useState();
-    const [ isEditEmployee, setIsEditEmployee ] = useState(false);
-    const [ employeeId, setEmployeeId ] = useState('');
-
-    const [ sorted , setSorted ] = useState(false)
-
-    const handleDelete = (id) => {
-        // console.log(id)
-        if(isLoading) {
-            db.collection('Employees').doc(id).delete();
-        }
-        
-    }
-
-    const handleEditClick = (id) => {
-        setIsEditEmployee(true);
-        setEmployeeId(id);
-        // console.log(employeeId)
-    }
-
-    const handleEditClose = () => {
-        setIsEditEmployee(false)
-    }
-
-    const normalizeText = (text) => {
-
-        if(typeof text === 'string')  {
-            console.log(typeof text);
-            console.log(text);
-            return text
-          .toLowerCase()
-          .normalize("NFD")
-          .replace(/[\u0300-\u036f]/g, "")
-          .trim();
-        } else {
-            console.log(typeof text)
-            console.log(text)
-            console.log(new Date(text.seconds * 1000).getTime());
-            return new Date(text.seconds * 1000).getTime();
-        }
-      };
-
-    const handleSorting = ( label ) => {
-        console.log(employees)
-        if(sorted) {
-            employees.sort((a,b) => {
-                const aElement = normalizeText(a.employee[label]);
-                const bElement = normalizeText(b.employee[label]);
     
-                if (aElement < bElement) {
-                    return -1
-                }
-                if (aElement > bElement) {
-                    return 1;
-                }
-                return 0;
-            })
-            setSorted(!sorted)
-        } else {
-            employees.sort((a,b) => {
-                const aElement = normalizeText(a.employee[label]);
-                const bElement = normalizeText(b.employee[label]);
-    
-                if (aElement > bElement) {
-                    return -1
-                }
-                if (aElement < bElement) {
-                    return 1;
-                }
-                return 0;
-            })
-            setSorted(!sorted)
-        }
-    }
 
-    const handleChange = (e) => {
-        console.log(e.target.value)
-    }
+    // const handleChange = (e) => {
+    //     console.log(e.target.value)
+    // }
 
-    useEffect(() => {
-        setIsLoading(true);
-    }, [employees, sorted])
     
     return (
         <>
@@ -104,7 +26,7 @@ const EmployeeList = ( props ) => {
                 <h1>Table of employees</h1>
                 <div className='employee__search'>
                     <Link className='button' to="/">Homepage</Link>
-                    <input type="text" onChange={(e) => {handleChange(e)}}/>
+                    <input type="text" onChange={(e) => {handleSearch(e)}}/>
                 </div>
             </div>
             <section className='employee__section'>
