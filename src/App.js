@@ -13,7 +13,7 @@ const App = () => {
   const [ isLoading, setIsLoading ] = useState();
   const [ isEditEmployee, setIsEditEmployee ] = useState(false);
   const [ employeeId, setEmployeeId ] = useState('');
-  const [ allEmployees, setAllEmployees ] = useState(data)
+  const [searchedEmployees, setSearchEmployees ] = useState([])
 
   const [ sorted , setSorted ] = useState(false);
 
@@ -27,7 +27,7 @@ const App = () => {
 
   const handleSorting = ( label ) => {
     if(sorted) {
-        data.sort((a,b) => {
+        searchedEmployees.sort((a,b) => {
             const aElement = normalizeText(a.employee[label]);
             const bElement = normalizeText(b.employee[label]);
 
@@ -41,7 +41,7 @@ const App = () => {
         })
         setSorted(!sorted)
     } else {
-        data.sort((a,b) => {
+        searchedEmployees.sort((a,b) => {
             const aElement = normalizeText(a.employee[label]);
             const bElement = normalizeText(b.employee[label]);
 
@@ -55,46 +55,45 @@ const App = () => {
         })
         setSorted(!sorted)
     }
-}
-
-const handleSearch = (e) => {
-  console.log(e.target.value);
-
-  let searchedEmployees = data.filter ( el => {
-    return el.employee.firstName.toLowerCase().includes(e.target.value.toLowerCase());
-  })
-  console.log(searchedEmployees)
-
-  if(e.target.value.length > 0) {
-    setAllEmployees(searchedEmployees);
-  } else {
-    setAllEmployees(data)
   }
 
-}
+  const handleSearch = (e) => {
 
-const handleEditClick = (id) => {
-  setIsEditEmployee(true);
-  setEmployeeId(id);
-}
+    setSearchEmployees(data.filter ( el => {
+      return el.employee.firstName.toLowerCase().includes(e.target.value.toLowerCase())
+      || el.employee.lastName.toLowerCase().includes(e.target.value.toLowerCase())
+      || el.employee.department.toLowerCase().includes(e.target.value.toLowerCase())
+      || el.employee.street.toLowerCase().includes(e.target.value.toLowerCase())
+      || el.employee.city.toLowerCase().includes(e.target.value.toLowerCase())
+      || el.employee.state.toLowerCase().includes(e.target.value.toLowerCase())
+      || el.employee.zip.toString().includes(e.target.value.toLowerCase())
+    }))
 
-const handleEditClose = () => {
-  setIsEditEmployee(false);
-}
+  }
+
+  const handleEditClick = (id) => {
+    setIsEditEmployee(true);
+    setEmployeeId(id);
+  }
+
+  const handleEditClose = () => {
+    setIsEditEmployee(false);
+  }
 
   useEffect(() => {
     if(isMounted.current) {
       db.collection('Employees').onSnapshot(snapshot => {
-        setData(snapshot.docs.map(doc => ({id: doc.id, employee: doc.data()})))
+        setSearchEmployees(snapshot.docs.map(doc => ({id: doc.id, employee: doc.data()})))
       })
     } else {
       isMounted.current = true
     }
   }, [isMounted])
 
+
   useEffect(() => {
     setIsLoading(true);
-  }, [data, sorted])
+  }, [data, sorted, setSearchEmployees])
 
   return (
     <Router>
@@ -102,7 +101,7 @@ const handleEditClose = () => {
         <Route exact path="/" element={<Homepage/>} />
         <Route path="/employee-list" element={
           <EmployeeList
-            employees = {data} 
+            employees = {searchedEmployees} 
             employeeId = {employeeId}
             handleDelete = {handleDelete}
             handleSorting = {handleSorting}

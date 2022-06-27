@@ -14,12 +14,6 @@ const EmployeeList = ( props ) => {
     const {employees, handleDelete, handleSorting, handleEditClick, handleEditClose, handleSearch, employeeId, isEditEmployee} = props;
 
     
-
-    // const handleChange = (e) => {
-    //     console.log(e.target.value)
-    // }
-
-    
     return (
         <>
             <div className='employee__header'>
