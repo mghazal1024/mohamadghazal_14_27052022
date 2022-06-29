@@ -12,7 +12,7 @@ import { useEmployeesStore } from '../../store';
 
 
 // RENDERS the list of employees
-const EmployeeList = ({ handleDelete, handleSorting, handleEditClick, handleEditClose, handleSearch, employeeId, isEditEmployee }) => {
+const EmployeeList = () => {
 
 
     const deleteEmployee = useEmployeesStore(state => state.deleteEmployee)
@@ -25,12 +25,24 @@ const EmployeeList = ({ handleDelete, handleSorting, handleEditClick, handleEdit
     const paginate = useEmployeesStore(state => state.paginate)
 
     const [ perPage, setPerPage ] = useState(10);
+    const [ isEditEmployee, setIsEditEmployee ] = useState(false);
+    const [ employeeId, setEmployeeId ] = useState('');
+
 
     const indexOfLast = currentPage * perPage;
     const indexOfFirst = indexOfLast - perPage;
     // const currentDisplayed = searchedEmployees.slice(indexOfFirst, indexOfLast); 
     const currentDisplayed = employees.slice(indexOfFirst, indexOfLast); 
 
+
+    const handleEditClick = (id) => {
+        setIsEditEmployee(true);
+        setEmployeeId(id);
+      }
+
+      const handleEditClose = () => {
+        setIsEditEmployee(false);
+      }
 
 
     const pageNumbers = [];
@@ -59,7 +71,7 @@ const EmployeeList = ({ handleDelete, handleSorting, handleEditClick, handleEdit
                 {employees.map((employee, i) => {
                     return (
                         <ul className='employee__row' key={i}>
-                            <li className='employee__cell'>{new Date(employee.startDate.seconds*1000).toDateString()}</li>
+                            <li className='employee__cell'>{new Date(employee.startDate).toDateString()}</li>
                             <li className='employee__cell'>{employee.firstName}</li>
                             <li className='employee__cell'>{employee.lastName}</li>
                             <li className='employee__cell'>{employee.department}</li>
@@ -67,7 +79,7 @@ const EmployeeList = ({ handleDelete, handleSorting, handleEditClick, handleEdit
                             <li className='employee__cell'>{employee.city}</li>
                             <li className='employee__cell'>{employee.state}</li>
                             <li className='employee__cell'>{employee.zip}</li>
-                            <li className='employee__cell'>{new Date(employee.birthDate.seconds*1000).toDateString()}</li>
+                            <li className='employee__cell'>{new Date(employee.birthDate).toDateString()}</li>
                             <li className='employee__cell employee__cell--action'>
                                 <div className='employee__action'>
                                     <FontAwesomeIcon icon={faPencil} onClick={() => {handleEditClick(employee.id)}}/>

@@ -18,8 +18,8 @@ const App = () => {
 
   const [data, setData] = useState([]);
   // const [ isLoading, setIsLoading ] = useState();
-  const [ isEditEmployee, setIsEditEmployee ] = useState(false);
-  const [ employeeId, setEmployeeId ] = useState('');
+  // const [ isEditEmployee, setIsEditEmployee ] = useState(false);
+  // const [ employeeId, setEmployeeId ] = useState('');
   const [searchedEmployees, setSearchEmployees ] = useState([])
   const [ sorted , setSorted ] = useState(false);
   const isMounted = useRef(false);
@@ -65,15 +65,15 @@ const App = () => {
  
 
   // display a modal to edit the employee
-  const handleEditClick = (id) => {
-    setIsEditEmployee(true);
-    setEmployeeId(id);
-  }
+  // const handleEditClick = (id) => {
+  //   setIsEditEmployee(true);
+  //   setEmployeeId(id);
+  // }
 
   // closes the employee edit
-  const handleEditClose = () => {
-    setIsEditEmployee(false);
-  }
+  // const handleEditClose = () => {
+  //   setIsEditEmployee(false);
+  // }
 
   // Change page on pagination
   // const paginate = (pageNumber) => {
@@ -123,13 +123,13 @@ const App = () => {
         <Route path="/employee-list" element={
           <EmployeeList
             // employees = {currentDisplayed} 
-            employeeId = {employeeId}
+            // employeeId = {employeeId}
             // handleDelete = {handleDelete}
             // handleSorting = {handleSorting}
-            handleEditClick = {handleEditClick}
-            handleEditClose = {handleEditClose}
+            // handleEditClick = {handleEditClick}
+            // handleEditClose = {handleEditClose}
             // handleSearch = {handleSearch}
-            isEditEmployee = {isEditEmployee}
+            // isEditEmployee = {isEditEmployee}
             // perPage = {perPage}
             // totalEmployees = {searchedEmployees.length}
             // paginate = {paginate}

@@ -6,25 +6,30 @@ import db from '../../firebaseConfig'
 import { states, departments} from '../../data/dropdownData'
 import DatePicker from '../Datepicker/datepicker'
 import Dropdown from '../Dropdown/dropdown'
+import { useEmployeesStore } from '../../store'
 
 const EditEmployee = ( props ) => {
 
     const {handleClose, employees, employeeId} = props 
     
+    const updateEmployee = useEmployeesStore(state => state.updateEmployee)
     const selectedEmployee = employees.find( e => e.id === employeeId);
 
+
     // STATES
-    const [ firstName, setFirstName ] = useState(selectedEmployee.employee.firstName)
-    const [ lastName, setLastName ] = useState(selectedEmployee.employee.lastName)
-    const [ street, setStreet ] = useState(selectedEmployee.employee.street)
-    const [ city, setCity ] = useState(selectedEmployee.employee.city)
-    const [ zip, setZip ] = useState(selectedEmployee.employee.zip)
-    const [ state, setState ] = useState(selectedEmployee.employee.state)
-    const [ department, setDepartment ] = useState(selectedEmployee.employee.department)
-    const [ birthDate, setBirthDate ] = useState(new Date(selectedEmployee.employee.birthDate.seconds * 1000));
-    const [ startDate, setStartDate ] = useState(new Date(selectedEmployee.employee.startDate.seconds * 1000));
+    const [ id ] = useState(selectedEmployee.id)
+    const [ firstName, setFirstName ] = useState(selectedEmployee.firstName)
+    const [ lastName, setLastName ] = useState(selectedEmployee.lastName)
+    const [ street, setStreet ] = useState(selectedEmployee.street)
+    const [ city, setCity ] = useState(selectedEmployee.city)
+    const [ zip, setZip ] = useState(selectedEmployee.zip)
+    const [ state, setState ] = useState(selectedEmployee.state)
+    const [ department, setDepartment ] = useState(selectedEmployee.department)
+    const [ birthDate, setBirthDate ] = useState(new Date(selectedEmployee.birthDate.seconds * 1000));
+    const [ startDate, setStartDate ] = useState(new Date(selectedEmployee.startDate.seconds * 1000));
     const [ successMessage, setSuccessMessage ] = useState(false)
     const [ reset, setReset ] = useState(false)
+
 
 
     // Functions to handle selections
@@ -40,12 +45,25 @@ const EditEmployee = ( props ) => {
     const handleStartDateSelection = (data) => {
         setStartDate(data);
     }
+    
 
     // Handles edit submission
     const handleUpdateSubmit = (e) => {
         e.preventDefault();
         try {
-            db.collection('Employees').doc(employeeId).update({
+            // db.collection('Employees').doc(employeeId).update({
+            //     firstName: firstName,
+            //     lastName: lastName,
+            //     street: street,
+            //     city: city,
+            //     zip: zip,
+            //     state: state,
+            //     department: department,
+            //     birthDate: birthDate,
+            //     startDate: startDate
+            // })
+            updateEmployee({
+                id: id,
                 firstName: firstName,
                 lastName: lastName,
                 street: street,

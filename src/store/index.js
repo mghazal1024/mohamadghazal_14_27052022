@@ -29,6 +29,30 @@ const useStore = create(
             ...state.employees
           ]
         })),
+      updateEmployee: (employee) => {
+        set(state => ({
+          employees: state.employees.map(item => {
+            console.log(item.id)
+            console.log(employee.id)
+            if(item.id === employee.id) {
+              return {
+                ...item,
+                firstName: employee.firstName,
+                lastName: employee.lastName,
+                street: employee.street,
+                city: employee.city,
+                state: employee.state,
+                zip: employee.zip,
+                birthDate: employee.birthDate,
+                startDate: employee.startDate,
+                department: employee.department
+              };
+            } else {
+              return item;
+            }
+          })
+        }))
+      }, 
       deleteEmployee: (id) => {
         set(state => ({
           employees: state.employees.filter(employee => employee.id !== id)
