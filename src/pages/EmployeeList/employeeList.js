@@ -21,12 +21,13 @@ const EmployeeList = () => {
     const employees = useEmployeesStore(state => state.employees)
     const currentPage = useEmployeesStore(state => state.currentPage)
     const sorted = useEmployeesStore(state => state.sorted)
-    const searchedEmployees = useEmployeesStore(state => state.searchedEmployees)
+    // const searchedEmployees = useEmployeesStore(state => state.searchedEmployees)
     const paginate = useEmployeesStore(state => state.paginate)
 
     const [ perPage, setPerPage ] = useState(10);
     const [ isEditEmployee, setIsEditEmployee ] = useState(false);
     const [ employeeId, setEmployeeId ] = useState('');
+    const [ searchedEmployees, setSearchedEmployees ] = useState(employees)
 
 
     const indexOfLast = currentPage * perPage;
@@ -58,7 +59,7 @@ const EmployeeList = () => {
                 <h1>Table of employees</h1>
                 <div className='employee__search'>
                     <Link className='button' to="/">Homepage</Link>
-                    <input type="text" onChange={(e) => {searchEmployees(e)}}/>
+                    <input type="text" onChange={(e) => {searchEmployees(e, searchedEmployees)}}/>
                 </div>
             </div>
             <section className='employee__section'>

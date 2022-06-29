@@ -11,7 +11,7 @@ const useStore = create(
       searchedEmployees: employeesData,
       sorted: false,
       currentPage: 1,
-      addEmployee: employee =>
+      addEmployee: (employee) => {
         set(state => ({
           employees: [
             {
@@ -28,12 +28,48 @@ const useStore = create(
             },
             ...state.employees
           ]
-        })),
+        }))
+        set(state => ({
+          searchedEmployees: [
+            {
+              id: Math.random() * 100 + '',
+              firstName: employee.firstName,
+              lastName: employee.lastName,
+              street: employee.street,
+              city: employee.city,
+              state: employee.state,
+              zip: employee.zip,
+              birthDate: employee.birthDate,
+              startDate: employee.startDate,
+              department: employee.department
+            },
+            ...state.searchedEmployees
+          ]
+        }))
+      },
       updateEmployee: (employee) => {
         set(state => ({
           employees: state.employees.map(item => {
-            console.log(item.id)
-            console.log(employee.id)
+            if(item.id === employee.id) {
+              return {
+                ...item,
+                firstName: employee.firstName,
+                lastName: employee.lastName,
+                street: employee.street,
+                city: employee.city,
+                state: employee.state,
+                zip: employee.zip,
+                birthDate: employee.birthDate,
+                startDate: employee.startDate,
+                department: employee.department
+              };
+            } else {
+              return item;
+            }
+          })
+        }))
+        set(state => ({
+          searchedEmployees: state.searchedEmployees.map(item => {
             if(item.id === employee.id) {
               return {
                 ...item,
@@ -57,11 +93,14 @@ const useStore = create(
         set(state => ({
           employees: state.employees.filter(employee => employee.id !== id)
         }))
+        set(state => ({
+          searchedEmployees: state.searchedEmployees.filter(employee => employee.id !== id)
+        }))
         console.log(get().employees)
       },
       searchEmployees: (e) => {
         set(state => ({
-          employees: state.searchedEmployee.filter( el => {
+          employees: state.searchedEmployees.filter( el => {
             return el.firstName.toLowerCase().includes(e.target.value.toLowerCase())
             || el.lastName.toLowerCase().includes(e.target.value.toLowerCase())
             || el.department.toLowerCase().includes(e.target.value.toLowerCase())
@@ -71,7 +110,6 @@ const useStore = create(
             || el.zip.toString().includes(e.target.value.toLowerCase())
           })
         }))
-        console.log(get().mulemployees)
       },
       sortEmployees: ( label ) => {
         if(get().sorted) {
