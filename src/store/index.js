@@ -150,6 +150,11 @@ const useStore = create(
         set( () => ({
           currentPage: pageNumber
         }))
+      },
+      backToOne: () => {
+        set(() => ({
+          currentPage: 1
+        }))
       }
     }),
     {

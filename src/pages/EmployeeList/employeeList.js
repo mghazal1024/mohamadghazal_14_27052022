@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState, useRef} from 'react'
 import {Link} from 'react-router-dom'
 import './employeeList.scss';
 import EditEmployee from '../../components/EditEmployee/edit-employee';
@@ -23,17 +23,18 @@ const EmployeeList = () => {
     const sorted = useEmployeesStore(state => state.sorted)
     // const searchedEmployees = useEmployeesStore(state => state.searchedEmployees)
     const paginate = useEmployeesStore(state => state.paginate)
+    const backToOne = useEmployeesStore(state => state.backToOne)
 
     const [ perPage, setPerPage ] = useState(10);
     const [ isEditEmployee, setIsEditEmployee ] = useState(false);
     const [ employeeId, setEmployeeId ] = useState('');
     const [ searchedEmployees, setSearchedEmployees ] = useState(employees)
+    const [ activeCount, setActiveCount ] = useState(null)
 
+    // const [ rows, setRows ] = useState([]);
+    // const [ loaded, setLoaded ] = useState();
+    // const ref = useRef(null);
 
-    const indexOfLast = currentPage * perPage;
-    const indexOfFirst = indexOfLast - perPage;
-    // const currentDisplayed = searchedEmployees.slice(indexOfFirst, indexOfLast); 
-    const currentDisplayed = employees.slice(indexOfFirst, indexOfLast); 
 
 
     const handleEditClick = (id) => {
@@ -52,6 +53,22 @@ const EmployeeList = () => {
       pageNumbers.push(i);
     }
 
+
+    // useEffect(() => {
+    //     const rows = [...ref.current.querySelectorAll('.employee__row')];
+    //     setRows(rows)
+    // }, [])
+
+    // console.log(rows)
+
+
+    const indexOfLast = currentPage * perPage;
+    const indexOfFirst = indexOfLast - perPage;
+    // const currentDisplayed = searchedEmployees.slice(indexOfFirst, indexOfLast); 
+    const currentDisplayed = employees.slice(indexOfFirst, indexOfLast); 
+
+    const counts = [10, 25, 50];
+
     
     return (
         <>
@@ -59,7 +76,15 @@ const EmployeeList = () => {
                 <h1>Table of employees</h1>
                 <div className='employee__search'>
                     <Link className='button' to="/">Homepage</Link>
-                    <input type="text" onChange={(e) => {searchEmployees(e, searchedEmployees)}}/>
+                    <input type="text" onChange={(e) => {searchEmployees(e)}}/>
+                </div>
+                <div className='employee__per-page'>
+                    <p>Display per Page:</p>
+                    <ul>
+                        {counts.map( link => {
+                            return <li key={link} className={`${activeCount === link ? 'active' : ''}`} onClick={() => {setPerPage(link); setActiveCount(link); backToOne()}}>{link}</li>
+                        })}
+                    </ul>
                 </div>
             </div>
             <section className='employee__section'>
@@ -69,7 +94,7 @@ const EmployeeList = () => {
                     })}
                     <li className='employee__title'>Actions</li>
                 </ul>
-                {employees.map((employee, i) => {
+                {currentDisplayed.map((employee, i) => {
                     return (
                         <ul className='employee__row' key={i}>
                             <li className='employee__cell'>{new Date(employee.startDate).toDateString()}</li>
@@ -99,7 +124,7 @@ const EmployeeList = () => {
             ></Pagination> */}
             <ul className='employee__pagination'>
                 {pageNumbers.map( number =>  (
-                    <li key={number} onClick={() => {paginate(number)}}>{number}</li>
+                    <li key={number} className={`${currentPage === number ? 'active' : ''}`} onClick={() => {paginate(number)}}>{number}</li>
                 ))}
             </ul>
             {isEditEmployee ? <EditEmployee handleClose = {handleEditClose} employees={employees} employeeId = {employeeId}></EditEmployee> : null}
