@@ -25,8 +25,8 @@ const EditEmployee = ( props ) => {
     const [ zip, setZip ] = useState(selectedEmployee.zip)
     const [ state, setState ] = useState(selectedEmployee.state)
     const [ department, setDepartment ] = useState(selectedEmployee.department)
-    const [ birthDate, setBirthDate ] = useState(new Date(selectedEmployee.birthDate.seconds * 1000));
-    const [ startDate, setStartDate ] = useState(new Date(selectedEmployee.startDate.seconds * 1000));
+    const [ birthDate, setBirthDate ] = useState(new Date(selectedEmployee.birthDate));
+    const [ startDate, setStartDate ] = useState(new Date(selectedEmployee.startDate));
     const [ successMessage, setSuccessMessage ] = useState(false)
     const [ reset, setReset ] = useState(false)
 
@@ -51,17 +51,6 @@ const EditEmployee = ( props ) => {
     const handleUpdateSubmit = (e) => {
         e.preventDefault();
         try {
-            // db.collection('Employees').doc(employeeId).update({
-            //     firstName: firstName,
-            //     lastName: lastName,
-            //     street: street,
-            //     city: city,
-            //     zip: zip,
-            //     state: state,
-            //     department: department,
-            //     birthDate: birthDate,
-            //     startDate: startDate
-            // })
             updateEmployee({
                 id: id,
                 firstName: firstName,
