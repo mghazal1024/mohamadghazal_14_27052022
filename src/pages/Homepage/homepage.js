@@ -7,8 +7,11 @@ import { states, departments } from '../../data/dropdownData'
 import Modal from '../../components/Modal/modal'
 import db from '../../firebaseConfig'
 import DatePicker from '../../components/Datepicker/datepicker'
+import { useEmployeesStore } from '../../store'
 
 const Homepage = () => {
+
+    const addEmployee = useEmployeesStore(state => state.addEmployee)
 
     // STATES
     const [firstName, setFirstName] = useState('');
@@ -99,7 +102,7 @@ const Homepage = () => {
         e.preventDefault();
         if(validateForm()) {
             try {
-                db.collection('Employees').add({
+                addEmployee({
                     firstName: firstName,
                     lastName: lastName,
                     street: street,
