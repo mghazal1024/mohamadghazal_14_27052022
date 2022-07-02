@@ -5,7 +5,8 @@ import { faClose } from '@fortawesome/free-solid-svg-icons'
 import db from '../../firebaseConfig'
 import { states, departments} from '../../data/dropdownData'
 import DatePicker from '../Datepicker/datepicker'
-import Dropdown from '../Dropdown/dropdown'
+// import Dropdown from '../Dropdown/dropdown'
+import Dropdown from '@mghazal1024/dropdown-react'
 import { useEmployeesStore } from '../../store'
 
 const EditEmployee = ( props ) => {
