@@ -2,11 +2,9 @@ import React, { useState } from 'react'
 import './homepage.scss'
 
 import Header from '../../components/Header/header'
-// import Dropdown from '../../components/Dropdown/dropdown'
 import Dropdown from '@mghazal1024/dropdown-react'
 import { states, departments } from '../../data/dropdownData'
 import Modal from '../../components/Modal/modal'
-import db from '../../firebaseConfig'
 import DatePicker from '../../components/Datepicker/datepicker'
 import { useEmployeesStore } from '../../store'
 
@@ -236,7 +234,6 @@ const Homepage = () => {
                     </form>
                 </div>
             </section>
-            {/* <div id="confirmation" className="modal">Employee Created!</div> */}
             { modal ? <Modal handleClose = {handleClose}></Modal> : ""}
         </>
     )

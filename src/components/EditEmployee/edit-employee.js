@@ -2,10 +2,8 @@ import React, { useState } from 'react'
 import './edit-employee.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClose } from '@fortawesome/free-solid-svg-icons'
-import db from '../../firebaseConfig'
 import { states, departments} from '../../data/dropdownData'
 import DatePicker from '../Datepicker/datepicker'
-// import Dropdown from '../Dropdown/dropdown'
 import Dropdown from '@mghazal1024/dropdown-react'
 import { useEmployeesStore } from '../../store'
 
@@ -29,7 +27,7 @@ const EditEmployee = ( props ) => {
     const [ birthDate, setBirthDate ] = useState(new Date(selectedEmployee.birthDate));
     const [ startDate, setStartDate ] = useState(new Date(selectedEmployee.startDate));
     const [ successMessage, setSuccessMessage ] = useState(false)
-    const [ reset, setReset ] = useState(false)
+    const [ reset ] = useState(false)
 
 
 

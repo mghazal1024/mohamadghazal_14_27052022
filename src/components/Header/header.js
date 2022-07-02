@@ -10,7 +10,6 @@ const Header = () => {
                 <h1>HRnet</h1>
             </div>
             <nav>
-                <Link to="/">Home</Link>
                 <Link to="/employee-list">View Current Employees</Link>
             </nav>
         </header>

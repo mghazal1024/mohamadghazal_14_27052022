@@ -5,7 +5,6 @@ import EditEmployee from '../../components/EditEmployee/edit-employee';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { columns  } from '../../data/dropdownData';
-import Pagination from '../../components/Pagination/pagination';
 
 import { useEmployeesStore } from '../../store';
 
@@ -21,19 +20,13 @@ const EmployeeList = () => {
     const employees = useEmployeesStore(state => state.employees)
     const currentPage = useEmployeesStore(state => state.currentPage)
     const sorted = useEmployeesStore(state => state.sorted)
-    // const searchedEmployees = useEmployeesStore(state => state.searchedEmployees)
     const paginate = useEmployeesStore(state => state.paginate)
     const backToOne = useEmployeesStore(state => state.backToOne)
 
     const [ perPage, setPerPage ] = useState(10);
     const [ isEditEmployee, setIsEditEmployee ] = useState(false);
     const [ employeeId, setEmployeeId ] = useState('');
-    const [ searchedEmployees, setSearchedEmployees ] = useState(employees)
     const [ activeCount, setActiveCount ] = useState(null)
-
-    // const [ rows, setRows ] = useState([]);
-    // const [ loaded, setLoaded ] = useState();
-    // const ref = useRef(null);
 
 
 
@@ -54,17 +47,9 @@ const EmployeeList = () => {
     }
 
 
-    // useEffect(() => {
-    //     const rows = [...ref.current.querySelectorAll('.employee__row')];
-    //     setRows(rows)
-    // }, [])
-
-    // console.log(rows)
-
 
     const indexOfLast = currentPage * perPage;
     const indexOfFirst = indexOfLast - perPage;
-    // const currentDisplayed = searchedEmployees.slice(indexOfFirst, indexOfLast); 
     const currentDisplayed = employees.slice(indexOfFirst, indexOfLast); 
 
     const counts = [10, 25, 50];
@@ -118,10 +103,6 @@ const EmployeeList = () => {
                     )
                 })}
             </section>
-            {/* <Pagination
-                pageNumbers = {pageNumbers}
-                paginate = {paginate}
-            ></Pagination> */}
             <ul className='employee__pagination'>
                 {pageNumbers.map( number =>  (
                     <li key={number} className={`${currentPage === number ? 'active' : ''}`} onClick={() => {paginate(number)}}>{number}</li>

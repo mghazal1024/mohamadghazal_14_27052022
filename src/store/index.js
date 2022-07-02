@@ -96,7 +96,6 @@ const useStore = create(
         set(state => ({
           searchedEmployees: state.searchedEmployees.filter(employee => employee.id !== id)
         }))
-        console.log(get().employees)
       },
       searchEmployees: (e) => {
         set(state => ({
